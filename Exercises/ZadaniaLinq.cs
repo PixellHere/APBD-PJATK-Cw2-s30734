@@ -16,7 +16,9 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie01_StudenciZWarszawy()
     {
-        throw Niezaimplementowano(nameof(Zadanie01_StudenciZWarszawy));
+        return DaneUczelni.Studenci
+            .Where(student => student.Miasto.Equals("Warsaw"))
+            .Select(student => $"{student.NumerIndeksu} {student.Imie} {student.Nazwisko} {student.Miasto}" );
     }
 
     /// <summary>
@@ -30,7 +32,7 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie02_AdresyEmailStudentow()
     {
-        throw Niezaimplementowano(nameof(Zadanie02_AdresyEmailStudentow));
+        return DaneUczelni.Studenci.Select(student => student.Email);
     }
 
     /// <summary>
@@ -45,7 +47,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie03_StudenciPosortowani()
     {
-        throw Niezaimplementowano(nameof(Zadanie03_StudenciPosortowani));
+        return DaneUczelni.Studenci
+            .OrderBy(student => student.Nazwisko)
+            .ThenBy(student => student.Imie)
+            .Select(student => $"{student.NumerIndeksu} {student.Imie} {student.Nazwisko}");
     }
 
     /// <summary>
@@ -60,7 +65,12 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie04_PierwszyPrzedmiotAnalityczny()
     {
-        throw Niezaimplementowano(nameof(Zadanie04_PierwszyPrzedmiotAnalityczny));
+        var result = DaneUczelni.Przedmioty
+            .FirstOrDefault(przedmiot => przedmiot.Kategoria.Equals("Analytics"));
+        
+        return result != null 
+            ? new List<string> { $"{result.Nazwa} {result.DataStartu}" } 
+            : new List<string> { "Brak przedmiotu" };
     }
 
     /// <summary>
@@ -77,7 +87,12 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie05_CzyIstniejeNieaktywneZapisanie()
     {
-        throw Niezaimplementowano(nameof(Zadanie05_CzyIstniejeNieaktywneZapisanie));
+        var result = DaneUczelni.Zapisy
+            .FirstOrDefault(zapis => zapis.CzyAktywny == false);
+        
+        return result != null 
+            ? new List<string> { "True" } 
+            : new List<string> { "False" };
     }
 
     /// <summary>
